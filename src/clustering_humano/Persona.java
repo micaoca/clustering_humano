@@ -18,7 +18,6 @@ public class Persona  {
 		
 	}
 
-	//Metodos de consultas
 	public String getNombre() {
 		return nombre;
 	}

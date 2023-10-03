@@ -2,20 +2,17 @@ package clustering_humano;
 
 import java.util.HashMap;
 
-public class juego {
+public class Aplicacion {
 	
 	public HashMap<Integer, Persona> personas = new HashMap<>();
 	private Grafo grafo;
 	private int contador;
 
-	public juego() {
-		
+	public Aplicacion() {
 		contador = 0;
-		
 	}
 
 	 public void agregarPersona(String nombre, int d, int m, int e, int c) {
-		 
 		 	Persona persona = new Persona(nombre,d,m,e,c);
 	        personas.put(contador, persona);
 	        contador += 1;
@@ -23,12 +20,8 @@ public class juego {
 	 
 	 
 	 public void armarGrupoPersonas() {
-		 
 		 armarGrafo();
 		 agregarAristas();
-		 //armarArbolGeneradorMinimo();
-		 
-		 
 	 }
 	 
 	 private void armarGrafo() {
@@ -68,17 +61,11 @@ public class juego {
 		 int e2 = personas.get(columna).getE();
 		 int c2 = personas.get(columna).getC();
 		 
-		 int indiceSimiliridad = (d1 - d2) + (m1 -  m2) + (e1 - e2) + (c1 - c2);
+		 int indiceSimilaridad = (d1 - d2) + (m1 -  m2) + (e1 - e2) + (c1 - c2);
 
-		 return indiceSimiliridad;
+		 return indiceSimilaridad;
 		 
 	 }
-	 
-//	 private void armarArbolGeneradorMinimo() {
-//		 
-//		 this.grafo.ArmarArbolGeneradorMinimo();
-//		 
-//	 }
 	
 	
 }

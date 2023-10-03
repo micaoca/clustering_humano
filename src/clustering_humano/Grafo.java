@@ -1,8 +1,5 @@
 package clustering_humano;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Grafo {
 
 	private int[][] A;
