@@ -20,9 +20,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.AbstractListModel;
 import java.awt.CardLayout;
+import java.awt.SystemColor;
 
 public class AplicacionView extends JFrame {
 
@@ -33,7 +35,8 @@ public class AplicacionView extends JFrame {
 	private JTextField input_interes_espectaculo;
 	private JTextField input_interes_deportivo;
 	private Aplicacion app;
-	private JPanel panelPersonas_1;
+	private JTable table;
+	DefaultTableModel modeloTabla = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -64,119 +67,125 @@ public class AplicacionView extends JFrame {
 		
 		JPanel panelAggPersona = iniciarPanelAggPersona();
 		
-		agregarPanelPersonas();
-		agregarLabels(panelAggPersona);
+ 		agregarLabels(panelAggPersona);
 		agregarInputs(panelAggPersona);
 		agregarBotones(panelAggPersona);
+		perzonalizarTabla(panelAggPersona);
 		
 	}
 
-	private void agregarPanelPersonas() {
-		panelPersonas_1 = new JPanel();
-		panelPersonas_1.setBackground(new Color(128, 128, 128));
-		panelPersonas_1.setBounds(0, 269, 656, 205);
-		contentPane.add(panelPersonas_1);
-	}
+	private void perzonalizarTabla(JPanel panelAggPersona) {
 
+
+	}
 	
 	//Metodos de conveniencia
 	private JPanel iniciarPanelAggPersona() {
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(192, 192, 192));
-		panel.setBounds(0, 45, 656, 226);
+		panel.setBackground(SystemColor.control);
+		panel.setBounds(1, 0, 656, 476);
 		contentPane.add(panel);
 		panel.setLayout(null);
+		
+		JLabel lbl_titulo_app = new JLabel("Clustering humano");
+		lbl_titulo_app.setBounds(20, 24, 280, 23);
+		panel.add(lbl_titulo_app);
+		lbl_titulo_app.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lbl_titulo_app.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		
+		JScrollPane scrollpane = new JScrollPane();
+		scrollpane.setBounds(20, 279, 612, 173);
+		panel.add(scrollpane);
+		
+		table = new JTable();
+		scrollpane.setViewportView(table);
+		
+		modeloTabla.setColumnIdentifiers(new Object[]{
+				"Nombre", "Interes deporte", "Interes musica", "Interes espectaculos", "Interes ciencia"
+		});	
+		
+		table.setModel(modeloTabla);
 		return panel;
 	}
 
 	private void agregarLabels(JPanel panel) {
-		JLabel label_nombre = new JLabel("Nombre");
-		label_nombre.setHorizontalAlignment(SwingConstants.CENTER);
-		label_nombre.setFont(new Font("Tahoma", Font.ITALIC, 14));
-		label_nombre.setBounds(33, 86, 241, 14);
-		panel.add(label_nombre);
+		JLabel lblNombre = new JLabel("Nombre:");
+		lblNombre.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNombre.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNombre.setBounds(20, 60, 241, 14);
+		panel.add(lblNombre);
 		
-		JLabel label_musica = new JLabel("Interés por la música");
-		label_musica.setHorizontalAlignment(SwingConstants.CENTER);
-		label_musica.setLabelFor(input_interes_musical);
-		label_musica.setFont(new Font("Tahoma", Font.ITALIC, 14));
-		label_musica.setBounds(33, 135, 241, 14);
-		panel.add(label_musica);
+		JLabel lblIntersPorLa = new JLabel("Interés por la música:");
+		lblIntersPorLa.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIntersPorLa.setLabelFor(input_interes_musical);
+		lblIntersPorLa.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIntersPorLa.setBounds(20, 109, 241, 14);
+		panel.add(lblIntersPorLa);
 		
-		JLabel label_espectaculo = new JLabel("Interés por las noticias del espectáculo");
-		label_espectaculo.setHorizontalAlignment(SwingConstants.CENTER);
-		label_espectaculo.setLabelFor(input_interes_espectaculo);
-		label_espectaculo.setFont(new Font("Tahoma", Font.ITALIC, 14));
-		label_espectaculo.setBounds(33, 160, 241, 14);
-		panel.add(label_espectaculo);
+		JLabel lblIntersPorLas = new JLabel("Interés por las noticias del espectáculo:");
+		lblIntersPorLas.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIntersPorLas.setLabelFor(input_interes_espectaculo);
+		lblIntersPorLas.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIntersPorLas.setBounds(20, 134, 241, 14);
+		panel.add(lblIntersPorLas);
 		
-		JLabel label_deportes = new JLabel("Interés por los deportes");
-		label_deportes.setHorizontalAlignment(SwingConstants.CENTER);
-		label_deportes.setFont(new Font("Tahoma", Font.ITALIC, 14));
-		label_deportes.setBounds(33, 111, 241, 14);
-		panel.add(label_deportes);
+		JLabel lblIntersPorLos = new JLabel("Interés por los deportes:");
+		lblIntersPorLos.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIntersPorLos.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIntersPorLos.setBounds(20, 85, 241, 14);
+		panel.add(lblIntersPorLos);
 		
-		JLabel label_ciencia = new JLabel("Interés por la ciencia");
-		label_ciencia.setHorizontalAlignment(SwingConstants.CENTER);
-		label_ciencia.setLabelFor(input_interes_cientifico);
-		label_ciencia.setFont(new Font("Tahoma", Font.ITALIC, 14));
-		label_ciencia.setBounds(33, 185, 241, 14);
-		panel.add(label_ciencia);
-		
-		JLabel lbl_agregar_persona = new JLabel("Agregar persona");
-		lbl_agregar_persona.setBounds(257, 23, 150, 22);
-		panel.add(lbl_agregar_persona);
-		lbl_agregar_persona.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lbl_agregar_persona.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		JLabel lbl_titulo_app = new JLabel("Clustering humano");
-		lbl_titulo_app.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
-		lbl_titulo_app.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_titulo_app.setBounds(184, 11, 280, 23);
-		contentPane.add(lbl_titulo_app);
+		JLabel lblIntersPorLa_1 = new JLabel("Interés por la ciencia:");
+		lblIntersPorLa_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblIntersPorLa_1.setLabelFor(input_interes_cientifico);
+		lblIntersPorLa_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblIntersPorLa_1.setBounds(20, 159, 241, 14);
+		panel.add(lblIntersPorLa_1);
 	}
 
 	private void agregarInputs(JPanel panel) {
 		input_interes_musical = new JTextField();
 		input_interes_musical.setHorizontalAlignment(SwingConstants.CENTER);
-		input_interes_musical.setBounds(284, 134, 187, 20);
+		input_interes_musical.setBounds(265, 108, 187, 20);
 		panel.add(input_interes_musical);
 		input_interes_musical.setColumns(10);
 		
 		input_interes_espectaculo = new JTextField();
 		input_interes_espectaculo.setHorizontalAlignment(SwingConstants.CENTER);
-		input_interes_espectaculo.setBounds(284, 159, 187, 20);
+		input_interes_espectaculo.setBounds(265, 133, 187, 20);
 		panel.add(input_interes_espectaculo);
 		input_interes_espectaculo.setColumns(10);
 		
 		input_interes_cientifico = new JTextField();
 		input_interes_cientifico.setHorizontalAlignment(SwingConstants.CENTER);
-		input_interes_cientifico.setBounds(284, 184, 187, 20);
+		input_interes_cientifico.setBounds(265, 158, 187, 20);
 		panel.add(input_interes_cientifico);
 		input_interes_cientifico.setColumns(10);
 		
 		input_nombre = new JTextField();
 		input_nombre.setHorizontalAlignment(SwingConstants.CENTER);
-		input_nombre.setBounds(284, 85, 187, 20);
+		input_nombre.setBounds(265, 59, 187, 20);
 		panel.add(input_nombre);
 		input_nombre.setColumns(10);
 		
 		input_interes_deportivo = new JTextField();
 		input_interes_deportivo.setHorizontalAlignment(SwingConstants.CENTER);
-		input_interes_deportivo.setBounds(284, 110, 187, 20);
+		input_interes_deportivo.setBounds(265, 84, 187, 20);
 		panel.add(input_interes_deportivo);
 		input_interes_deportivo.setColumns(10);
 	}
 
 	private void agregarBotones(JPanel panel) {
 		JButton btn_agregar_persona = new JButton("Agregar persona");
-		btn_agregar_persona.setBackground(new Color(0, 255, 64));
-		btn_agregar_persona.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btn_agregar_persona.setBounds(481, 116, 165, 52);
+		btn_agregar_persona.setBackground(SystemColor.controlHighlight);
+		btn_agregar_persona.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btn_agregar_persona.setBounds(290, 198, 137, 33);
 		panel.add(btn_agregar_persona);
 		
 		JButton btn_ejecutar_algoritmo = new JButton("Ejecutar algorítmo");
-		btn_ejecutar_algoritmo.setBounds(503, 183, 121, 23);
+		btn_ejecutar_algoritmo.setBackground(SystemColor.controlHighlight);
+		btn_ejecutar_algoritmo.setBounds(20, 245, 123, 23);
 		panel.add(btn_ejecutar_algoritmo);
 		
 		agregarListeners(btn_agregar_persona, btn_ejecutar_algoritmo);
@@ -185,13 +194,14 @@ public class AplicacionView extends JFrame {
 	private void agregarListeners(JButton btn_agregar_persona, JButton btn_ejecutar_algoritmo) {
 		btn_agregar_persona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String inputNombre = input_nombre.getText();
+				String  inputNombre = input_nombre.getText();
 				Integer inputDeportes = Integer.parseInt(input_interes_deportivo.getText());
 				Integer inputMusica = Integer.parseInt(input_interes_musical.getText());
 				Integer inputEspectaculos = Integer.parseInt(input_interes_espectaculo.getText());
 				Integer inputCiencia = Integer.parseInt(input_interes_cientifico.getText());
 				app.agregarPersona(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia);
-				
+				agregarPanelPersonas(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia);   
+				limpiarControles();
 			}
 		});
 		
@@ -204,6 +214,28 @@ public class AplicacionView extends JFrame {
 				}
 			}
 		});
+	}
+	
+	private void agregarPanelPersonas(String nombre, int d, int m, int e, int c) {
+		
+		modeloTabla.addRow(new Object[]{
+				nombre
+				,d
+				,m
+				,e
+				,c
+		});	
+		
+		
+	}
+	
+	private void limpiarControles() {
+		input_nombre.setText("");
+		input_interes_deportivo.setText("");
+		input_interes_musical.setText("");
+		input_interes_espectaculo.setText("");
+		input_interes_cientifico.setText("");
+		input_nombre.requestFocus();
 	}
 
 	private void iniciarFrame() {
