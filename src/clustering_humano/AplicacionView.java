@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -16,6 +17,9 @@ import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.event.AncestorListener;
@@ -70,11 +74,11 @@ public class AplicacionView extends JFrame {
  		agregarLabels(panelAggPersona);
 		agregarInputs(panelAggPersona);
 		agregarBotones(panelAggPersona);
-		perzonalizarTabla(panelAggPersona);
+		personalizarTabla(panelAggPersona);
 		
 	}
 
-	private void perzonalizarTabla(JPanel panelAggPersona) {
+	private void personalizarTabla(JPanel panelAggPersona) {
 
 
 	}
@@ -194,15 +198,22 @@ public class AplicacionView extends JFrame {
 	private void agregarListeners(JButton btn_agregar_persona, JButton btn_ejecutar_algoritmo) {
 		btn_agregar_persona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String  inputNombre = input_nombre.getText();
-				Integer inputDeportes = Integer.parseInt(input_interes_deportivo.getText());
-				Integer inputMusica = Integer.parseInt(input_interes_musical.getText());
-				Integer inputEspectaculos = Integer.parseInt(input_interes_espectaculo.getText());
-				Integer inputCiencia = Integer.parseInt(input_interes_cientifico.getText());
-				app.agregarPersona(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia);
-				agregarPanelPersonas(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia);   
-				limpiarControles();
+				String inputNombre = input_nombre.getText();
+				String inputDeportes = input_interes_deportivo.getText();
+				String inputMusica = input_interes_musical.getText();
+				String inputEspectaculos = input_interes_espectaculo.getText();
+				String inputCiencia = input_interes_cientifico.getText();
+				if(validarCampos(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia)) {
+					app.agregarPersona(inputNombre, Integer.parseInt(inputDeportes), Integer.parseInt(inputMusica), Integer.parseInt(inputEspectaculos), Integer.parseInt(inputCiencia));
+					agregarPanelPersonas(inputNombre, Integer.parseInt(inputDeportes), Integer.parseInt(inputMusica), Integer.parseInt(inputEspectaculos), Integer.parseInt(inputCiencia));   
+					limpiarControles();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Error en los campos. Revise que todos estén completos y respeten el dato de entrada.");
+				}
 			}
+
+			
 		});
 		
 		btn_ejecutar_algoritmo.addActionListener(new ActionListener() {
@@ -216,6 +227,20 @@ public class AplicacionView extends JFrame {
 		});
 	}
 	
+	private boolean validarCampos(String inputNombre, String inputDeportes, String inputMusica,
+			String inputEspectaculos, String inputCiencia) {
+		return validarCadena(inputNombre) && validarEntero(inputDeportes) && validarEntero(inputMusica) && validarEntero(inputEspectaculos) && validarEntero(inputCiencia);
+	}
+	
+	private boolean validarCadena(String inputNombre) {
+		return inputNombre.length() > 0;
+	}
+
+	private boolean validarEntero(String inputEntero) {
+		List<String> numerosValidos = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5"));
+		return numerosValidos.contains(inputEntero);
+	}
+
 	private void agregarPanelPersonas(String nombre, int d, int m, int e, int c) {
 		
 		modeloTabla.addRow(new Object[]{

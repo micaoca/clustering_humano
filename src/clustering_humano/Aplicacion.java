@@ -1,31 +1,77 @@
 package clustering_humano;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Aplicacion {
 	
-	public ArrayList<Persona> personas = new ArrayList<>();
+	public Map<Integer, Persona> personas = new HashMap<>();
 	private Grafo grafo;
+	private int contador;
 
-	public Aplicacion() {}
+	public Aplicacion() {
+		contador = 0;
+	}
 
 	public void agregarPersona(String nombre, int d, int m, int e, int c) {
-		personas.add(new Persona(nombre, d, m, e, c));
+		personas.put(contador, new Persona(nombre, d, m, e, c));
+		contador++;
 	}
 	 
 	public void armarGrupoPersonas() throws Exception {
 		try {
 			iniciarGrafo();
 			agregarAristas();
-			/*List<int[]> agm = ArbolGeneradorMinimo.getAGM(grafo.getMatrizAdyacencia(), personas.size());
-			for(int i = 0; i < agm.size(); i++) {
-				System.out.print(agm.get(i)[0] + " " + agm.get(i)[1]);
-			}*/
-			List<Arco> agm = grafo.darAGM();
-			for(Arco arco : agm) {
-				System.out.println(arco.toString());
+			
+			ArbolGeneradorMinimo agm = new ArbolGeneradorMinimo(grafo.getMatrizAdyacencia());
+			List<Arco> aristasAGM = agm.getAGM();
+
+			
+			Collections.sort(aristasAGM, Comparator.comparingInt(arco -> arco.getPeso()));
+			
+			for(int i = 0; i < aristasAGM.size(); i++) {
+				System.out.println(aristasAGM.get(i) + " ");
 			}
+			
+			//-------------------------------------------------------------------------------//
+			
+			Set<Persona> grupo1 = new HashSet<>();
+			Set<Persona> grupo2 = new HashSet<>();
+			
+			Arco arcoMayorPeso = aristasAGM.get(aristasAGM.size() - 1);
+			for(Arco arco : aristasAGM) {
+				if(!arco.equals(arcoMayorPeso)) {
+					
+				}
+			}
+
+			/*
+			//int destinoGuardado = agm.get(0).getD();
+			Arco arcoMayorPeso = agm.get(0);
+			for(Arco arco : agm) {
+				if(arco.getPeso() > arcoMayorPeso.getPeso()) {
+					//destinoGuardado = arcoMayorPeso.getD();
+					arcoMayorPeso = arco;
+				}
+			}
+			
+						grupo2.add(personas.get(arcoMayorPeso.getD()));
+			
+			for(Persona persona : grupo1) {
+				System.out.print("GRUPO 1: ");
+				System.out.println(persona.getNombre());
+			}
+			
+			for(Persona persona : grupo2) {
+				System.out.print("GRUPO 2: ");
+				System.out.println(persona.getNombre());
+			}*/
 		} catch(Exception e) { 
 			throw new Exception("Error interno.");
 		}
@@ -44,8 +90,6 @@ public class Aplicacion {
 		}
 
 		this.grafo.imprimirMatriz();
-		//this.grafo.obtenerAristaMenorPeso();
-		//this.grafo.obtenerAristaMayorPeso();
 	 }
 	
 	private int indiceSimilaridad(int fila, int columna) {

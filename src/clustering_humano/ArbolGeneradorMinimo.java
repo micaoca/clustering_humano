@@ -1,48 +1,99 @@
 package clustering_humano;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ArbolGeneradorMinimo {
 	
-	
-	ArbolGeneradorMinimo(){}
-	
-	public static List<int[]> getAGM(int[][] matrizAdyacencia, int nVertices) {
+	private int[][] matrizAdyacencia;
+  	private int[] padres;
+  	private int vertices;
+  	private int aristas;
+  	private ArrayList<Arco> arcos;
+  
+  	public ArbolGeneradorMinimo (int[][] matrizAdyacencia) {
+  		this.matrizAdyacencia = matrizAdyacencia;
+  		this.padres = new int[matrizAdyacencia.length];
+  		this.vertices = matrizAdyacencia.length;
+  		this.aristas = matrizAdyacencia.length;
+  		this.arcos = new ArrayList<Arco>();
+  	}
+  	
+  	public List<Arco> getAGM() {
+		iniciarPadres();
+		armarArcos(matrizAdyacencia);
+		ordenarArcos();
 		
-        List<int[]> agm = new ArrayList<>();
-        List<int[]> aristas = new ArrayList<>();
+		int[] padres = darPadres();
+		List<Arco> aristasAGM = new ArrayList<Arco>();
+		
+		for(int i = 0; i < padres.length; i++) {
+			if(i != padres[i])
+				aristasAGM.add(new Arco(i, padres[i], matrizAdyacencia[i][padres[i]]));
+		}
+		
+		return aristasAGM;
+	}
+  	
+  	private void iniciarPadres(){
+		for(int i = 0; i<padres.length; i++) {
+			padres[i] = i;
+		}
+	}
+  	
+  	private void armarArcos(int[][] matrizAdyacencia) {
+		for(int i = 0; i < matrizAdyacencia.length; i++) {
+			for(int j = 0; j < matrizAdyacencia.length; j++) {
+				if(i != j) {
+					arcos.add(new Arco(i, j, matrizAdyacencia[i][j]));
+				}
+			}
+		}
+	}
+  	
+  	private void ordenarArcos() {
+		Collections.sort(arcos, new Comparator<Arco>() {
+			@Override
+			public int compare(Arco arco1, Arco arco2){
+				return arco1.getPeso() - arco2.getPeso();
+			}
+		});
+	}
+  	
+  	private void unir(int origen, int destino) {
+		 int unionO = getPadre(origen);
+		 int unionD = getPadre(destino);
+		 padres[unionO] = unionD;
+	}
+  	
+  	private int[] darPadres() {
+  		int cant_arcos = 0;
+		int i = 0;
+		
+  		while(cant_arcos < this.vertices - 1 && i < aristas) {
+			int origen = arcos.get(i).getO();
+			int destino = arcos.get(i).getD();
+			
+			if(getPadre(origen) != getPadre(destino)){
+				unir(origen, destino);
+				cant_arcos++;
+			}
+			
+			i++;
+		}
+  		return padres;
+  	}
+	  
+  	private int getPadre(int vertice) { 
+  		if (padres[vertice] == vertice) {
+  			return vertice; 
+		}
+  		return getPadre(padres[vertice]);
+	}
 
-        for (int i = 0; i < nVertices; i++) {
-            for (int j = i + 1; j < nVertices; j++) {
-                int peso = matrizAdyacencia[i][j];
-                if (peso > 0) {
-                    aristas.add(new int[] { i, j, peso });
-                    System.out.println(i +" " + j + " "+peso);
-                }
-            }
-        }
-
-        aristas.sort((a, b) -> Integer.compare(a[2], b[2]));
-
-        Set<Integer> visitados = new HashSet<>();
-
-        for (int[] arista : aristas) {
-            int origen = arista[0];
-            int destino = arista[1];
-
-            if (!visitados.contains(origen) || !visitados.contains(destino)) {
-            	agm.add(arista);
-                visitados.add(origen);
-                visitados.add(destino);
-            }
-        }
-
-        return agm;
-    }
-
+	public ArrayList<Arco> getArcos() {
+		return this.arcos;
+	}
 }
