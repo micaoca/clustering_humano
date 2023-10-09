@@ -14,6 +14,8 @@ public class Aplicacion {
 	public Map<Integer, Persona> personas = new HashMap<>();
 	private Grafo grafo;
 	private int contador;
+	Set<Integer> grupo1 = new HashSet<>();
+	Set<Integer> grupo2 = new HashSet<>();
 
 	public Aplicacion() {
 		contador = 0;
@@ -31,50 +33,47 @@ public class Aplicacion {
 			
 			ArbolGeneradorMinimo agm = new ArbolGeneradorMinimo(grafo.getMatrizAdyacencia());
 			List<Arco> aristasAGM = agm.getAGM();
+			Solver.eliminarArcoMayorPeso(aristasAGM);
+			
+	        for (Arco arco : aristasAGM) {
+	            if (grupo1.isEmpty() || (grupo1.contains(arco.getD()) || grupo1.contains(arco.getO()))) {
+	            	grupo1.add(arco.getD());
+	            	grupo1.add(arco.getO());
+	            }
+	            else {
+	            	grupo2.add(arco.getD());
+	            	grupo2.add(arco.getO());
+	            }
+	        }
 
-			
-			Collections.sort(aristasAGM, Comparator.comparingInt(arco -> arco.getPeso()));
-			
-			for(int i = 0; i < aristasAGM.size(); i++) {
-				System.out.println(aristasAGM.get(i) + " ");
-			}
-			
-			//-------------------------------------------------------------------------------//
-			
-			Set<Persona> grupo1 = new HashSet<>();
-			Set<Persona> grupo2 = new HashSet<>();
-			
-			Arco arcoMayorPeso = aristasAGM.get(aristasAGM.size() - 1);
-			for(Arco arco : aristasAGM) {
-				if(!arco.equals(arcoMayorPeso)) {
-					
-				}
-			}
-
-			/*
-			//int destinoGuardado = agm.get(0).getD();
-			Arco arcoMayorPeso = agm.get(0);
-			for(Arco arco : agm) {
-				if(arco.getPeso() > arcoMayorPeso.getPeso()) {
-					//destinoGuardado = arcoMayorPeso.getD();
-					arcoMayorPeso = arco;
-				}
-			}
-			
-						grupo2.add(personas.get(arcoMayorPeso.getD()));
-			
-			for(Persona persona : grupo1) {
-				System.out.print("GRUPO 1: ");
-				System.out.println(persona.getNombre());
-			}
-			
-			for(Persona persona : grupo2) {
-				System.out.print("GRUPO 2: ");
-				System.out.println(persona.getNombre());
-			}*/
 		} catch(Exception e) { 
 			throw new Exception("Error interno.");
 		}
+	}
+	
+	public String[] nombresGrupo1() {
+		String[] nombresGrupo1 = new String[grupo1.size()];
+		int i = 0;
+		
+        for (Integer elemento : grupo1) {
+        	nombresGrupo1[i] = personas.get(elemento).getNombre();
+        	i++;
+        }
+		
+        return nombresGrupo1;
+	}
+	
+	public String[] nombresGrupo2() {
+		String[] nombresGrupo2 = new String[grupo2.size()];
+		int i = 0;
+		
+        for (Integer elemento : grupo2) {
+        	nombresGrupo2[i] = personas.get(elemento).getNombre();
+        	i++;
+        }
+		
+        return nombresGrupo2;
+		
 	}
 	
 	private void iniciarGrafo() {
@@ -82,7 +81,6 @@ public class Aplicacion {
 	}
 	
 	private void agregarAristas() {
-		  
 		for(int fila = 0; fila < personas.size() ; fila++) {
 			for(int columna = (fila + 1); columna < personas.size() ; columna++) {
 				grafo.agregarArista(fila, columna, indiceSimilaridad(fila, columna));

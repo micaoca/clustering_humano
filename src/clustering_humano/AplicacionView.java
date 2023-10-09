@@ -74,13 +74,7 @@ public class AplicacionView extends JFrame {
  		agregarLabels(panelAggPersona);
 		agregarInputs(panelAggPersona);
 		agregarBotones(panelAggPersona);
-		personalizarTabla(panelAggPersona);
 		
-	}
-
-	private void personalizarTabla(JPanel panelAggPersona) {
-
-
 	}
 	
 	//Metodos de conveniencia
@@ -220,6 +214,10 @@ public class AplicacionView extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					app.armarGrupoPersonas();
+	                SolucionClusteringView solucionClustering = new SolucionClusteringView();
+	                solucionClustering.agregarPersonas(app.nombresGrupo1(), app.nombresGrupo2());
+	                solucionClustering.setVisible(true);
+	                
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -244,11 +242,7 @@ public class AplicacionView extends JFrame {
 	private void agregarPanelPersonas(String nombre, int d, int m, int e, int c) {
 		
 		modeloTabla.addRow(new Object[]{
-				nombre
-				,d
-				,m
-				,e
-				,c
+				nombre,d,m,e,c
 		});	
 		
 		

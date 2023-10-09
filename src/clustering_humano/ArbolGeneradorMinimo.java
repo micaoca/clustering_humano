@@ -22,18 +22,26 @@ public class ArbolGeneradorMinimo {
   	}
   	
   	public List<Arco> getAGM() {
-		iniciarPadres();
+		iniciarPadres(); 
 		armarArcos(matrizAdyacencia);
 		ordenarArcos();
 		
-		int[] padres = darPadres();
 		List<Arco> aristasAGM = new ArrayList<Arco>();
+		int i = 0;
 		
-		for(int i = 0; i < padres.length; i++) {
-			if(i != padres[i])
-				aristasAGM.add(new Arco(i, padres[i], matrizAdyacencia[i][padres[i]]));
+  		while(aristasAGM.size() < this.vertices - 1) {
+  			
+			int origen = arcos.get(i).getO();
+			int destino = arcos.get(i).getD();
+			
+			if(getPadre(origen) != getPadre(destino)){
+				aristasAGM.add(new Arco(origen, destino, matrizAdyacencia[origen][destino]));
+				unir(origen, destino);
+			}
+			
+			i++;
 		}
-		
+
 		return aristasAGM;
 	}
   	
@@ -67,24 +75,6 @@ public class ArbolGeneradorMinimo {
 		 int unionD = getPadre(destino);
 		 padres[unionO] = unionD;
 	}
-  	
-  	private int[] darPadres() {
-  		int cant_arcos = 0;
-		int i = 0;
-		
-  		while(cant_arcos < this.vertices - 1 && i < aristas) {
-			int origen = arcos.get(i).getO();
-			int destino = arcos.get(i).getD();
-			
-			if(getPadre(origen) != getPadre(destino)){
-				unir(origen, destino);
-				cant_arcos++;
-			}
-			
-			i++;
-		}
-  		return padres;
-  	}
 	  
   	private int getPadre(int vertice) { 
   		if (padres[vertice] == vertice) {
