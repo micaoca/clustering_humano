@@ -102,7 +102,7 @@ public class AplicacionNegocio {
         return nombresGrupo2;
 	}
 	
-	public Arco eliminarArcoMayorPeso(List<Arco> arcos) {
+	public Arco eliminarArcoMayorPeso(List<Arco> arcos) throws Exception {
 		Arco arcoMayorPeso = Grafo.mayorPeso(arcos);
 		arcos.remove(arcoMayorPeso);
 		return arcoMayorPeso;

@@ -27,10 +27,14 @@ public class Grafo {
 	}
 	
 	private boolean validar(int fila, int columna) { //throws exception
-		return ( fila > 0 || columna > 0 ) && ( fila < matrizAdyacencia.length || columna < matrizAdyacencia.length); 
+		return ( fila >= 0 && columna >= 0 ) && ( fila < matrizAdyacencia.length && columna < matrizAdyacencia.length); 
 	}
 	
-	public static Arco mayorPeso(List<Arco> arcos) {
+	public static Arco mayorPeso(List<Arco> arcos) throws NullPointerException {
+		if(arcos.isEmpty() || arcos == null) {
+			throw new NullPointerException("Lista de arcos vacía o nula.");
+		}
+		
 	    Arco arcoMayorPeso = arcos.get(0);
 
 	    for (Arco arco : arcos) {

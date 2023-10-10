@@ -68,7 +68,7 @@ public class AplicacionNegocioTest {
 	}
 	
 	@Test
-	public void eliminarArcoMayorPesoTest() {
+	public void eliminarArcoMayorPesoTest() throws Exception {
 		Arco aristaEliminadaEsperada = new Arco(0, 2, 6);
 		List<Arco> aristasAGM = cargarArcosAGM(aristaEliminadaEsperada);
 		
