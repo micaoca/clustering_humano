@@ -43,13 +43,13 @@ public class ArbolGeneradorMinimo {
 		return aristasAGM;
 	}
   	
-  	private void iniciarPadres(){
+  	public void iniciarPadres(){
 		for(int i = 0; i<padres.length; i++) {
 			padres[i] = i;
 		}
 	}
   	
-  	private void armarArcos(int[][] matrizAdyacencia) {
+  	public void armarArcos(int[][] matrizAdyacencia) {
 		for(int i = 0; i < matrizAdyacencia.length; i++) {
 			for(int j = 0; j < matrizAdyacencia.length; j++) {
 				if(i != j) {
@@ -59,7 +59,7 @@ public class ArbolGeneradorMinimo {
 		}
 	}
   	
-  	private void ordenarArcos() {
+  	public void ordenarArcos() {
 		Collections.sort(arcos, new Comparator<Arco>() {
 			@Override
 			public int compare(Arco arco1, Arco arco2){
@@ -68,13 +68,13 @@ public class ArbolGeneradorMinimo {
 		});
 	}
   	
-  	private void unir(int origen, int destino) {
+  	public void unir(int origen, int destino) {
 		 int unionO = getPadre(origen);
 		 int unionD = getPadre(destino);
 		 padres[unionO] = unionD;
 	}
 	  
-  	private int getPadre(int vertice) { 
+  	public int getPadre(int vertice) { 
   		if (padres[vertice] == vertice) {
   			return vertice; 
 		}
@@ -84,4 +84,8 @@ public class ArbolGeneradorMinimo {
 	public ArrayList<Arco> getArcos() {
 		return this.arcos;
 	}
+	
+	public int[] getPadres() {
+		return padres;
+	} 
 }
