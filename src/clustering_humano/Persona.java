@@ -1,13 +1,12 @@
 package clustering_humano;
 
-public class Persona  {
+public class Persona {
 	
 	private String nombre;
 	private int d;
 	private int m;
 	private int e;
 	private int c;
-	
 	
 	public Persona(String nombre, int d, int m, int e, int c) {
 		this.nombre = nombre;
@@ -37,9 +36,5 @@ public class Persona  {
 	public int getC() {
 		return c;
 	}
-
-
-	
-	
 
 }

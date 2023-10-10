@@ -30,7 +30,7 @@ import javax.swing.AbstractListModel;
 import java.awt.CardLayout;
 import java.awt.SystemColor;
 
-public class AplicacionView extends JFrame {
+public class ClusteringForm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField input_nombre;
@@ -38,9 +38,9 @@ public class AplicacionView extends JFrame {
 	private JTextField input_interes_cientifico;
 	private JTextField input_interes_espectaculo;
 	private JTextField input_interes_deportivo;
-	private Aplicacion app;
+	private AplicacionNegocio app;
 	private JTable table;
-	DefaultTableModel modeloTabla = new DefaultTableModel();
+	DefaultTableModel modeloTabla;
 
 	/**
 	 * Launch the application.
@@ -49,7 +49,7 @@ public class AplicacionView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AplicacionView frame = new AplicacionView();
+					ClusteringForm frame = new ClusteringForm();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,8 +61,9 @@ public class AplicacionView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AplicacionView() {
-		this.app = new Aplicacion();
+	public ClusteringForm() {
+		this.app = new AplicacionNegocio();
+		this.setResizable(false);
 		initialize();
 	}
 
@@ -79,31 +80,45 @@ public class AplicacionView extends JFrame {
 	
 	//Metodos de conveniencia
 	private JPanel iniciarPanelAggPersona() {
-		JPanel panel = new JPanel();
-		panel.setBackground(SystemColor.control);
-		panel.setBounds(1, 0, 656, 476);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
+		JPanel panel = crearPanel();
 		JLabel lbl_titulo_app = new JLabel("Clustering humano");
-		lbl_titulo_app.setBounds(20, 24, 280, 23);
-		panel.add(lbl_titulo_app);
-		lbl_titulo_app.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lbl_titulo_app.setHorizontalAlignment(SwingConstants.LEFT);
+		JScrollPane scrollpane = crearScrollPane();
+		crearLabelTitulo(lbl_titulo_app);
+		modeloTabla = new DefaultTableModel();
 		
-		
-		JScrollPane scrollpane = new JScrollPane();
-		scrollpane.setBounds(20, 279, 612, 173);
 		panel.add(scrollpane);
+		panel.add(lbl_titulo_app);
 		
 		table = new JTable();
 		scrollpane.setViewportView(table);
-		
+	
 		modeloTabla.setColumnIdentifiers(new Object[]{
 				"Nombre", "Interes deporte", "Interes musica", "Interes espectaculos", "Interes ciencia"
 		});	
 		
 		table.setModel(modeloTabla);
+		return panel;
+	}
+
+	private void crearLabelTitulo(JLabel lbl_titulo_app) {
+		lbl_titulo_app.setBounds(20, 24, 280, 23);
+		
+		lbl_titulo_app.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lbl_titulo_app.setHorizontalAlignment(SwingConstants.LEFT);
+	}
+
+	private JScrollPane crearScrollPane() {
+		JScrollPane scrollpane = new JScrollPane();
+		scrollpane.setBounds(20, 279, 612, 173);
+		return scrollpane;
+	}
+
+	private JPanel crearPanel() {
+		JPanel panel = new JPanel();
+		panel.setBackground(SystemColor.control);
+		panel.setBounds(1, 0, 656, 476);
+		contentPane.add(panel);
+		panel.setLayout(null);
 		return panel;
 	}
 
@@ -213,8 +228,8 @@ public class AplicacionView extends JFrame {
 		btn_ejecutar_algoritmo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					app.armarGrupoPersonas();
-	                SolucionClusteringView solucionClustering = new SolucionClusteringView();
+					app.armarGruposPersonas();
+	                ResultadoClusteringView solucionClustering = new ResultadoClusteringView();
 	                solucionClustering.agregarPersonas(app.nombresGrupo1(), app.nombresGrupo2());
 	                solucionClustering.setVisible(true);
 	                
@@ -263,7 +278,7 @@ public class AplicacionView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(64, 128, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}

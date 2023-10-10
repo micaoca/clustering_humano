@@ -10,14 +10,12 @@ public class ArbolGeneradorMinimo {
 	private int[][] matrizAdyacencia;
   	private int[] padres;
   	private int vertices;
-  	private int aristas;
   	private ArrayList<Arco> arcos;
   
   	public ArbolGeneradorMinimo (int[][] matrizAdyacencia) {
   		this.matrizAdyacencia = matrizAdyacencia;
   		this.padres = new int[matrizAdyacencia.length];
   		this.vertices = matrizAdyacencia.length;
-  		this.aristas = matrizAdyacencia.length;
   		this.arcos = new ArrayList<Arco>();
   	}
   	

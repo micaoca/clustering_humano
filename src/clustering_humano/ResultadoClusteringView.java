@@ -12,25 +12,19 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class SolucionClusteringView extends JFrame {
+public class ResultadoClusteringView extends JFrame {
 
-	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
 	private JTable table_1;
-	private Aplicacion app;
 	DefaultTableModel modeloTabla1 = new DefaultTableModel();
 	DefaultTableModel modeloTabla2 = new DefaultTableModel();
-	
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SolucionClusteringView frame = new SolucionClusteringView();
+					ResultadoClusteringView frame = new ResultadoClusteringView();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,10 +33,9 @@ public class SolucionClusteringView extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public SolucionClusteringView() {
+	public ResultadoClusteringView() {
+		
+		this.setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 661, 397);
