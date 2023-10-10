@@ -15,7 +15,7 @@ public class Grafo {
 				
 	}
 
-	public void agregarArista(int fila, int columna, int peso) { //throws exception
+	public void agregarArco(int fila, int columna, int peso) { //throws exception
 		
 		if(!validar(fila, columna)) {
 			throw new IllegalArgumentException("Alguno de los datos es incorrecto.");
@@ -30,10 +30,10 @@ public class Grafo {
 		return ( fila > 0 || columna > 0 ) && ( fila < matrizAdyacencia.length || columna < matrizAdyacencia.length); 
 	}
 	
-	public static Arco mayorPeso(List<Arco> aristasAGM) {
-	    Arco arcoMayorPeso = aristasAGM.get(0);
+	public static Arco mayorPeso(List<Arco> arcos) {
+	    Arco arcoMayorPeso = arcos.get(0);
 
-	    for (Arco arco : aristasAGM) {
+	    for (Arco arco : arcos) {
 	        if (arco.getPeso() > arcoMayorPeso.getPeso()) {
 	        	arcoMayorPeso = arco;
 	        }
@@ -48,6 +48,10 @@ public class Grafo {
     
     public void setMatrizAdyacencia(int[][] matrizAdyacencia) { //throws exception
 		this.matrizAdyacencia = matrizAdyacencia;
+	}
+    
+    public List<Arco> getArcos() {
+		return arcos;
 	}
 		
 }

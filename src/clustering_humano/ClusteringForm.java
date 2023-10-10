@@ -212,48 +212,33 @@ public class ClusteringForm extends JFrame {
 				String inputMusica = input_interes_musical.getText();
 				String inputEspectaculos = input_interes_espectaculo.getText();
 				String inputCiencia = input_interes_cientifico.getText();
-				if(validarCampos(inputNombre, inputDeportes, inputMusica, inputEspectaculos, inputCiencia)) {
+				try {
 					app.agregarPersona(inputNombre, Integer.parseInt(inputDeportes), Integer.parseInt(inputMusica), Integer.parseInt(inputEspectaculos), Integer.parseInt(inputCiencia));
 					agregarPanelPersonas(inputNombre, Integer.parseInt(inputDeportes), Integer.parseInt(inputMusica), Integer.parseInt(inputEspectaculos), Integer.parseInt(inputCiencia));   
 					limpiarControles();
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Error en los campos. Revise que todos estén completos y respeten el dato de entrada.");
-				}
+				} catch(IllegalArgumentException error) {
+					JOptionPane.showMessageDialog(null, error.getMessage());
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(null, "No se pueden enviar campos vacíos.");
+				}	
 			}
-
-			
 		});
 		
 		btn_ejecutar_algoritmo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					app.armarGruposPersonas();
+					app.ejecutar();
 	                ResultadoClusteringView solucionClustering = new ResultadoClusteringView();
 	                solucionClustering.agregarPersonas(app.nombresGrupo1(), app.nombresGrupo2());
 	                solucionClustering.setVisible(true);
 	                
-				} catch (Exception e1) {
-					e1.printStackTrace();
+				} catch (Exception error) {
+					JOptionPane.showMessageDialog(null, error.getMessage());
 				}
 			}
 		});
 	}
 	
-	private boolean validarCampos(String inputNombre, String inputDeportes, String inputMusica,
-			String inputEspectaculos, String inputCiencia) {
-		return validarCadena(inputNombre) && validarEntero(inputDeportes) && validarEntero(inputMusica) && validarEntero(inputEspectaculos) && validarEntero(inputCiencia);
-	}
-	
-	private boolean validarCadena(String inputNombre) {
-		return inputNombre.length() > 0;
-	}
-
-	private boolean validarEntero(String inputEntero) {
-		List<String> numerosValidos = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5"));
-		return numerosValidos.contains(inputEntero);
-	}
-
 	private void agregarPanelPersonas(String nombre, int d, int m, int e, int c) {
 		
 		modeloTabla.addRow(new Object[]{

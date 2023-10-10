@@ -49,4 +49,16 @@ public class Arco {
 		return "Soy un arco. Mi origen es: " + o + " y mi destino es " + d +". Mi peso es de " + peso;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Arco otroArco = (Arco) o;
+        return this.o == otroArco.o && this.d == otroArco.d && this.peso == otroArco.peso;
+    }
+	
 }
