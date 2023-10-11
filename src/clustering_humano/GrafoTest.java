@@ -10,7 +10,7 @@ public class GrafoTest {
 
     @Before
     public void setUp() {
-        grafo = new Grafo(5); // Crear un grafo con 5 vértices
+        grafo = new Grafo(5);
     }
 
     @Test
@@ -22,7 +22,6 @@ public class GrafoTest {
         
         assertEquals(5, matrizAdyacencia[0][1]);
         assertEquals(5, matrizAdyacencia[1][0]);
-        assertTrue(grafo.getArcos().get(0).equals(arcoEsperado));
         assertEquals(grafo.getArcos().get(0), arcoEsperado);
     }
 

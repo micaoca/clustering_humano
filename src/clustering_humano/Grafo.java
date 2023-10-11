@@ -15,7 +15,7 @@ public class Grafo {
 				
 	}
 
-	public void agregarArco(int fila, int columna, int peso) { //throws exception
+	public void agregarArco(int fila, int columna, int peso) {
 		
 		if(!validar(fila, columna)) {
 			throw new IllegalArgumentException("Alguno de los datos es incorrecto.");
@@ -26,7 +26,7 @@ public class Grafo {
 		arcos.add(new Arco(fila, columna, peso));
 	}
 	
-	private boolean validar(int fila, int columna) { //throws exception
+	private boolean validar(int fila, int columna) {
 		return ( fila >= 0 && columna >= 0 ) && ( fila < matrizAdyacencia.length && columna < matrizAdyacencia.length); 
 	}
 	
@@ -46,11 +46,11 @@ public class Grafo {
 	    return arcoMayorPeso;
 	}
     
-    public int[][] getMatrizAdyacencia() { //throws exception
+    public int[][] getMatrizAdyacencia() {
 		return matrizAdyacencia;
 	}
     
-    public void setMatrizAdyacencia(int[][] matrizAdyacencia) { //throws exception
+    public void setMatrizAdyacencia(int[][] matrizAdyacencia) {
 		this.matrizAdyacencia = matrizAdyacencia;
 	}
     

@@ -42,9 +42,6 @@ public class ClusteringForm extends JFrame {
 	private JTable table;
 	DefaultTableModel modeloTabla;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,9 +55,6 @@ public class ClusteringForm extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public ClusteringForm() {
 		this.app = new AplicacionNegocio();
 		this.setResizable(false);

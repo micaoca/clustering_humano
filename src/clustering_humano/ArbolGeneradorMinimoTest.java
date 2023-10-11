@@ -12,19 +12,14 @@ public class ArbolGeneradorMinimoTest {
 	private static ArbolGeneradorMinimo agm;
 	private static int[][] matrizAdyacencia;
 	
-	
 	@Before
 	public void setUp() {
-		
 		matrizAdyacencia = new int [][] { { 0, 8, 6, 6 }, { 8, 0, 8, 6 }, { 6, 8, 0, 10 }, { 6, 6, 10, 0 } };		
 		agm = new ArbolGeneradorMinimo(matrizAdyacencia);
-
-
-		}
+	}
 	
 	@Test
 	public void iniciarPadresTest() {
-		
 		List<Integer> padresEsperados = new ArrayList<>();
 		padresEsperados.add(0);
 		padresEsperados.add(1);
@@ -33,17 +28,14 @@ public class ArbolGeneradorMinimoTest {
 		
 		agm.iniciarPadres();
 		
-		
-		
 		assertTrue(Arrays.stream(agm.getPadres()).boxed().toList().equals(padresEsperados));
-
 	}
 	
 	@Test
 	public void armarArcosTest() {
-
-		agm.armarArcos(matrizAdyacencia);
 		int arcosEsperados = 12;
+		
+		agm.armarArcos(matrizAdyacencia);
 		
 		assertEquals(arcosEsperados, agm.getArcos().size());
 	}
@@ -56,10 +48,7 @@ public class ArbolGeneradorMinimoTest {
 		ArrayList<Arco> arcos = agm.getArcos();
 		
 		for (int i = 0; i < arcos.size()-1; i++) {
-			assertTrue(arcos.get(i).getPeso() <= arcos.get(i).getPeso());	
-		}
-				
+			assertTrue(arcos.get(i).getPeso() <= arcos.get(i+1).getPeso());	
+		}	
 	}
-	
-	
 }

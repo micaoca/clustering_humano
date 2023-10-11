@@ -8,7 +8,7 @@ public class Arco {
 	private int peso;
 
 
-    Arco(int o, int d, int peso) {
+    public Arco(int o, int d, int peso) {
     	
         this.o = o;
         this.d = d;
